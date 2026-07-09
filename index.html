@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gu Zel - الموقع الجميل</title>
+    <style>
+        /* إعدادات الخطوط والألوان العامة */
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: #0f172a; /* خلفية داكنة مريحة للعين */
+            color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* الجزء العلوي (Hero Section) */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
+            position: relative;
+        }
+
+        /* الاسم الكبير المطلوب */
+        .main-title {
+            font-size: 7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 2s ease-in-out, pulse 3s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* زر التمرير للأسفل */
+        .btn-explore {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-explore:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        /* قسم الأشياء الجميلة (الميزات) */
+        .features-section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #8b5cf6;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* بطاقات الميزات */
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #8b5cf6;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #f1f5f9;
+        }
+
+        .card-text {
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* تأثيرات الحركة (Animations) */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            from { filter: drop-shadow(0 0 2px rgba(139, 92, 246, 0.2)); }
+            to { filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.6)); }
+        }
+
+        /* متجاوب مع الهواتف */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 4rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الواجهة الترحيبية -->
+    <header>
+        <h1 class="main-title">Gu Zel</h1>
+        <p class="subtitle">مرحباً بك في عالم من الإبداع والتصميم العصري. هنا نبني تجارب فريدة تعكس الجمال والاتقان في كل زاوية.</p>
+        <a href="#explore" class="btn-explore">اكتشف المزيد</a>
+    </header>
+
+    <!-- قسم الأشياء الجميلة -->
+    <section id="explore" class="features-section">
+        <h2 class="section-title">أشياء جميلة في انتظارك</h2>
+        
+        <div class="grid-container">
+            <!-- البطاقة الأولى -->
+            <div class="card">
+                <span class="card-icon">🎨</span>
+                <h3 class="card-title">تصميم إبداعي</h3>
+                <p class="card-text">ألوان متناسقة وواجهات عصرية مريحة للعين تم اختيارها بعناية لتناسب أرقى الأذواق.</p>
+            </div>
+
+            <!-- البطاقة الثانية -->
+            <div class="card">
+                <span class="card-icon">⚡</span>
+                <h3 class="card-title">سرعة فائقة</h3>
+                <p class="card-text">أداء عالي واستجابة فورية للتنقل بين عناصر الموقع بكل سلاسة ودون أي تأخير.</p>
+            </div>
+
+            <!-- البطاقة الثالثة -->
+            <div class="card">
+                <span class="card-icon">📱</span>
+                <h3 class="card-title">متجاوب بالكامل</h3>
+                <p class="card-text">سواء كنت تتصفح من هاتف، تابلت، أو شاشة حاسوب كبيرة، سيبدو الموقع دائماً مذهلاً ومتناسقاً.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+  </html>
+  
