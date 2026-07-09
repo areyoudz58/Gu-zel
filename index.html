@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع صحيح - تصميم 3D</title>
+    <style>
+        /* إعدادات الخلفية العامة والتدرج اللوني */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* التدرج اللوني المطلوب: أسود، أزرق ناعم، وردي، وأبيض */
+            background: linear-gradient(135deg, #0f0c20 0%, #1a1a2e 30%, #7097f7 60%, #ff9ebb 85%, #ffffff 100%);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            overflow: hidden;
+            perspective: 1000px; /* لتهيئة العمق ثلاثي الأبعاد */
+        }
+
+        /* أنيميشن حركة الخلفية الناعمة */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* الحاوية الرئيسية ثلاثية الأبعاد */
+        .container-3d {
+            position: relative;
+            width: 380px;
+            height: 500px;
+            transform-style: preserve-3d;
+            transform: rotateX(10deg) rotateY(-15deg);
+            transition: transform 0.5s ease;
+        }
+
+        /* حركة تفاعلية عند تمرير الماوس */
+        .container-3d:hover {
+            transform: rotateX(5deg) rotateY(5deg) scale(1.02);
+        }
+
+        /* تصميم الخانات المتعددة المترابطة (Layers) */
+        .layer {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.5s ease;
+        }
+
+        /* الخانة الخلفية: تعطي عمق وظل بلون وردي وأزرق ناعم */
+        .layer-bg {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateZ(-30px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5),
+                        0 0 30px rgba(112, 151, 247, 0.2),
+                        0 0 30px rgba(255, 158, 187, 0.2);
+        }
+
+        /* الخانة الوسطى: تحتوي على النصوص والتأثير الزجاجي الفاخر */
+        .layer-main {
+            background: rgba(15, 12, 32, 0.65);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transform: translateZ(0px);
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* الخانة الأمامية البرّاقة: تعطي لمعاناً ثلاثي الأبعاد فوق النصوص */
+        .layer-front {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateZ(30px);
+            pointer-events: none; /* لكي لا تحجب الضغط على العناصر بالأسفل */
+        }
+
+        /* تصميم النص العلوي: gu zel */
+        .title-guzel {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin: 0;
+            /* تداخل ألوان النص بين الأبيض والأزرق الناعم */
+            background: linear-gradient(to bottom, #ffffff 40%, #7097f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transform: translateZ(20px);
+        }
+
+        /* الخط الفاصل الناعم بين الخانات */
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #7097f7, #ff9ebb);
+            border-radius: 2px;
+            margin: 25px 0;
+            transform: translateZ(15px);
+        }
+
+        /* تصميم النص السفلي: Mohamed */
+        .subtitle-mohamed {
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin: 0;
+            /* تداخل ألوان اسم محمد بين الوردي والأبيض */
+            background: linear-gradient(45deg, #ff9ebb 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateZ(25px);
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+        }
+
+        /* إضافة لمسة جزيئات مضيئة في الخلفية */
+        .glow-point {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: #ff9ebb;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+        .glow-point.blue {
+            background: #7097f7;
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- نقاط الإضاءة الخلفية الناعمة -->
+    <div class="glow-point" style="top: 20%; left: 30%;"></div>
+    <div class="glow-point blue" style="bottom: 20%; right: 30%;"></div>
+
+    <!-- الحاوية ثلاثية الأبعاد بـ 3 خانات متراكبة -->
+    <div class="container-3d">
+        <!-- الخانة 1: الخلفية والعمق -->
+        <div class="layer layer-bg"></div>
+        
+        <!-- الخانة 2: الأساسية وتحتوي النصوص -->
+        <div class="layer layer-main">
+            <h1 class="title-guzel">gu zel</h1>
+            <div class="divider"></div>
+            <h2 class="subtitle-mohamed">Mohamed</h2>
+        </div>
+        
+        <!-- الخانة 3: الأمامية للمعان الـ 3D -->
+        <div class="layer layer-front"></div>
+    </div>
+
+    <script>
+        // تأثير حركة ثلاثي الأبعاد تفاعلي يتبع حركة الماوس بدقة
+        const container = document.querySelector('.container-3d');
+        document.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            container.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
+        });
+
+        // إعادة البطاقة لوضعها الطبيعي عند خروج الماوس
+        document.addEventListener('mouseleave', () => {
+            container.style.transform = `rotateX(10deg) rotateY(-15deg)`;
+        });
+    </script>
+</body>
+</html>
