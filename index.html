@@ -3,186 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع صحيح - تصميم 3D</title>
+    <title>Mohamed | Gu Zel</title>
     <style>
-        /* إعدادات الخلفية العامة والتدرج اللوني */
-        body {
+        /* --- المتغيرات والألوان الأساسية --- */
+        :root {
+            --bg-dark: #0b0f19;       /* أسود عميق للخلفية */
+            --bg-card: #161b26;       /* أسود فاتح للحاويات */
+            --text-light: #f3f4f6;    /* أبيض مائل للرمادي للنصوص */
+            --text-muted: #9ca3af;    /* رمادي للنصوص الثانوية */
+            --soft-blue: #60a5fa;     /* أزرق ناعم للمسات الاحترافية */
+            --pink-accent: #f472b6;   /* وردي ناعم للتفاصيل والتفاعل */
+            --gradient-primary: linear-gradient(135deg, #60a5fa, #f472b6);
+        }
+
+        /* --- الإعدادات العامة --- */
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* التدرج اللوني المطلوب: أسود، أزرق ناعم، وردي، وأبيض */
-            background: linear-gradient(135deg, #0f0c20 0%, #1a1a2e 30%, #7097f7 60%, #ff9ebb 85%, #ffffff 100%);
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
-            overflow: hidden;
-            perspective: 1000px; /* لتهيئة العمق ثلاثي الأبعاد */
         }
 
-        /* أنيميشن حركة الخلفية الناعمة */
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* الحاوية الرئيسية ثلاثية الأبعاد */
-        .container-3d {
-            position: relative;
-            width: 380px;
-            height: 500px;
-            transform-style: preserve-3d;
-            transform: rotateX(10deg) rotateY(-15deg);
-            transition: transform 0.5s ease;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        /* حركة تفاعلية عند تمرير الماوس */
-        .container-3d:hover {
-            transform: rotateX(5deg) rotateY(5deg) scale(1.02);
+        /* --- القائمة العلوية للتنقل (Navigation) --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 40px;
         }
 
-        /* تصميم الخانات المتعددة المترابطة (Layers) */
-        .layer {
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 18px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--text-light);
+            background-color: rgba(96, 165, 250, 0.1);
+        }
+
+        .nav-btn.active {
+            border-bottom: 2px solid var(--pink-accent);
+        }
+
+        /* --- التحكم في عرض الصفحات --- */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- الصفحة الأولى (الرئيسية) --- */
+        .hero-section {
+            text-align: center;
+            padding: 100px 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            box-sizing: border-box;
-            transition: all 0.5s ease;
+            justify-content: center;
+            min-height: 60vh;
         }
 
-        /* الخانة الخلفية: تعطي عمق وظل بلون وردي وأزرق ناعم */
-        .layer-bg {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transform: translateZ(-30px);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5),
-                        0 0 30px rgba(112, 151, 247, 0.2),
-                        0 0 30px rgba(255, 158, 187, 0.2);
-        }
-
-        /* الخانة الوسطى: تحتوي على النصوص والتأثير الزجاجي الفاخر */
-        .layer-main {
-            background: rgba(15, 12, 32, 0.65);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transform: translateZ(0px);
-            padding: 40px;
-            text-align: center;
-        }
-
-        /* الخانة الأمامية البرّاقة: تعطي لمعاناً ثلاثي الأبعاد فوق النصوص */
-        .layer-front {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transform: translateZ(30px);
-            pointer-events: none; /* لكي لا تحجب الضغط على العناصر بالأسفل */
-        }
-
-        /* تصميم النص العلوي: gu zel */
-        .title-guzel {
-            font-size: 3.5rem;
+        .hero-name {
+            font-size: 4rem;
             font-weight: 800;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #ffffff;
-            margin: 0;
-            /* تداخل ألوان النص بين الأبيض والأزرق الناعم */
-            background: linear-gradient(to bottom, #ffffff 40%, #7097f7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            transform: translateZ(20px);
-        }
-
-        /* الخط الفاصل الناعم بين الخانات */
-        .divider {
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #7097f7, #ff9ebb);
-            border-radius: 2px;
-            margin: 25px 0;
-            transform: translateZ(15px);
-        }
-
-        /* تصميم النص السفلي: Mohamed */
-        .subtitle-mohamed {
-            font-size: 1.8rem;
-            font-weight: 400;
             letter-spacing: 1px;
-            margin: 0;
-            /* تداخل ألوان اسم محمد بين الوردي والأبيض */
-            background: linear-gradient(45deg, #ff9ebb 0%, #ffffff 100%);
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transform: translateZ(25px);
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+            margin-bottom: 5px;
         }
 
-        /* إضافة لمسة جزيئات مضيئة في الخلفية */
-        .glow-point {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            background: #ff9ebb;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.6;
-            animation: float 6s ease-in-out infinite;
-        }
-        .glow-point.blue {
-            background: #7097f7;
-            animation-delay: -3s;
+        .hero-divider {
+            width: 150px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            margin: 15px 0;
+            box-shadow: 0 0 15px rgba(244, 114, 182, 0.4);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.1); }
+        .hero-company {
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--text-light);
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .hero-tagline {
+            margin-top: 25px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        /* --- صفحات مراحل التطوير (باقي الصفحات) --- */
+        .phase-header {
+            margin-bottom: 30px;
+            border-right: 4px solid var(--soft-blue);
+            padding-right: 15px;
+        }
+
+        .phase-header h2 {
+            font-size: 2.2rem;
+            color: var(--text-light);
+        }
+
+        .phase-header p {
+            color: var(--soft-blue);
+            font-weight: 600;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(244, 114, 182, 0.2);
+        }
+
+        .card h3 {
+            color: var(--pink-accent);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* --- التجاوب مع الشاشات الصغيرة --- */
+        @media (max-width: 768px) {
+            .hero-name { font-size: 2.8rem; }
+            .hero-company { font-size: 1.5rem; }
+            nav { flex-direction: column; gap: 20px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- نقاط الإضاءة الخلفية الناعمة -->
-    <div class="glow-point" style="top: 20%; left: 30%;"></div>
-    <div class="glow-point blue" style="bottom: 20%; right: 30%;"></div>
+    <div class="container">
+        <nav>
+            <div style="font-weight: bold; font-size: 1.2rem; color: var(--text-light);">M.G</div>
+            <ul class="nav-links">
+                <li><button class="nav-btn active" onclick="switchPage('home')">الرئيسية</button></li>
+                <li><button class="nav-btn" onclick="switchPage('phase1')">1. التخطيط والتحليل</button></li>
+                <li><button class="nav-btn" onclick="switchPage('phase2')">2. التصميم (UI/UX)</button></li>
+                <li><button class="nav-btn" onclick="switchPage('phase3')">3. التطوير والبرمجة</button></li>
+                <li><button class="nav-btn" onclick="switchPage('phase4')">4. الاختبار والإطلاق</button></li>
+            </ul>
+        </nav>
 
-    <!-- الحاوية ثلاثية الأبعاد بـ 3 خانات متراكبة -->
-    <div class="container-3d">
-        <!-- الخانة 1: الخلفية والعمق -->
-        <div class="layer layer-bg"></div>
-        
-        <!-- الخانة 2: الأساسية وتحتوي النصوص -->
-        <div class="layer layer-main">
-            <h1 class="title-guzel">gu zel</h1>
-            <div class="divider"></div>
-            <h2 class="subtitle-mohamed">Mohamed</h2>
-        </div>
-        
-        <!-- الخانة 3: الأمامية للمعان الـ 3D -->
-        <div class="layer layer-front"></div>
+        <section id="home" class="page active">
+            <div class="hero-section">
+                <h1 class="hero-name">Mohamed</h1>
+                <div class="hero-divider"></div>
+                <h2 class="hero-company">Gu Zel</h2>
+                <p class="hero-tagline">مرحباً بك في موقعنا الاستعراضي. تنقّل عبر القائمة العلوية لاستكشاف المراحل الاحترافية التي نتبعها لبناء وتطوير المواقع والمنصات الرقمية بأعلى معايير الجودة.</p>
+            </div>
+        </section>
+
+        <section id="phase1" class="page">
+            <div class="phase-header">
+                <h2>مرحلة التخطيط وجمع البيانات</h2>
+                <p>أساس نجاح أي مشروع رقمي</p>
+            </div>
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>تحديد الأهداف</h3>
+                    <p>نبدأ بجلسات عصف ذهني لتحديد الغرض الأساسي من الموقع، والجمهور المستهدف، والخدمات أو المنتجات التي سيتم تقديمها.</p>
+                </div>
+                <div class="card">
+                    <h3>دراسة المنافسين</h3>
+                    <p>تحليل المواقع المنافسة في السوق لمعرفة نقاط القوة والضعف، وتقديم تجربة مستخدم تتفوق عليهم وتضمن التميز.</p>
+                </div>
+                <div class="card">
+                    <h3>بناء خطة العمل</h3>
+                    <p>رسم الهيكل الشجري للموقع (Sitemap) وتحديد الميزات الفنية والتقنيات البرمجية الأنسب للمشروع.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="phase2" class="page">
+            <div class="phase-header">
+                <h2>مرحلة التصميم وهندسة التجربة</h2>
+                <p>إعطاء الهوية والروح للموقع</p>
+            </div>
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>تجربة المستخدم (UX)</h3>
+                    <p>عمل مخططات هيكلية بيضاء وسوداء (Wireframes) تضمن سهولة تنقل الزائر ووصوله للمعلومة بأسرع وقت وأقل جهد.</p>
+                </div>
+                <div class="card">
+                    <h3>واجهة المستخدم (UI)</h3>
+                    <p>تحويل المخططات إلى تصاميم بصرية مبهرة باستخدام ألوان متناسقة، خطوط عصرية، وتأثيرات تتوافق مع هوية البراند.</p>
+                </div>
+                <div class="card">
+                    <h3>التصميم التفاعلي</h3>
+                    <p>إعداد النماذج الأولية المتحركة (Prototypes) لمحاكاة تجربة الموقع الحقيقية قبل الدخول في مرحلة كتاية الكود.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="phase3" class="page">
+            <div class="phase-header">
+                <h2>مرحلة التطوير والبرمجة الفعلية</h2>
+                <p>تحويل الأفكار والتصاميم إلى واقع رقمي</p>
+            </div>
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>البرمجة الأمامية (Frontend)</h3>
+                    <p>تحويل التصاميم إلى أكواد تفاعلية حية باستخدام أحدث التقنيات لضمان مرونة وتجاوب الموقع مع جميع الشاشات والهواتف.</p>
+                </div>
+                <div class="card">
+                    <h3>البرمجة الخلفية (Backend)</h3>
+                    <p>بناء السيرفرات، قواعد البيانات، وأنظمة الأمان لضمان معالجة البيانات بكفاءة وسرعة، والتحكم التام بمحتوى الموقع.</p>
+                </div>
+                <div class="card">
+                    <h3>لوحة التحكم</h3>
+                    <p>تطوير لوحة تحكم سهلة وبسيطة تتيح لإدارة الموقع تعديل النصوص، الصور، والمنتجات دون الحاجة لخبرة برمجية.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="phase4" class="page">
+            <div class="phase-header">
+                <h2>مرحلة الاختبار والإطلاق النهائي</h2>
+                <p>الجودة والتأكد من خلو المشروع من الأخطاء</p>
+            </div>
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>فحص الأداء والجودة</h3>
+                    <p>اختبار سرعة الموقع، الأمان، وتوافقه مع كافة المتصفحات العالمية (Chrome, Safari, Edge) والهواتف الذكية.</p>
+                </div>
+                <div class="card">
+                    <h3>رفع الموقع والسيرفر</h3>
+                    <p>حجز الدومين (العنوان) واستضافة السيرفر السحابي ورفع الملفات بأمان لتصبح المنصة جاهزة لاستقبال الزوار.</p>
+                </div>
+                <div class="card">
+                    <h3>الدعم الفني والصيانة</h3>
+                    <p>مراقبة الموقع بعد الإطلاق لضمان استقراره، وعمل نسخ احتياطية دورية، وتحديث الأنظمة بشكل مستمر.</p>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script>
-        // تأثير حركة ثلاثي الأبعاد تفاعلي يتبع حركة الماوس بدقة
-        const container = document.querySelector('.container-3d');
-        document.addEventListener('mousemove', (e) => {
-            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            container.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
-        });
+        function switchPage(pageId) {
+            // إخفاء كل الصفحات
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
 
-        // إعادة البطاقة لوضعها الطبيعي عند خروج الماوس
-        document.addEventListener('mouseleave', () => {
-            container.style.transform = `rotateX(10deg) rotateY(-15deg)`;
-        });
+            // إزالة الحالة النشطة من أزرار القائمة
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // إظهار الصفحة المطلوبة
+            document.getElementById(pageId).classList.add('active');
+
+            // تفعيل الزر الذي تم الضغط عليه
+            const clickedBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(pageId));
+            if (clickedBtn) {
+                clickedBtn.classList.add('active');
+            }
+        }
     </script>
 </body>
 </html>
