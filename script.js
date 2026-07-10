@@ -1,13 +1,27 @@
-// تشغيل الموسيقى تلقائياً برفق فور قيام المستخدم بأي نقرة على الموقع لتفادي قيود المتصفح
-window.addEventListener('click', () => {
-    const music = document.getElementById('bgMusic');
-    if (music && music.paused) {
-        music.volume = 0.25; // جعل صوت نغمة هالاالدئة خفيف ومريح وخلفي
-        music.play().catch(err => console.log("المتصفح يطلب تفاعل إضافي لتشغيل الصوت"));
-    }
-}, { once: false }); // يستمر في التأكد من تفعيل الموسيقى الهادئة المرافقة لتصفح الأكاديمية
+const music = document.getElementById('bgMusic');
 
-// تحريك الخلفية بشكل عشوائي ديناميكي مستمر وملاحقة الماوس
+if (music) {
+    music.play().catch(() => {
+        console.log("المتصفح ينتظر حركة المستخدم لتفعيل الصوت تلقائياً.");
+    });
+
+    const activateAudio = () => {
+        if (music.muted) {
+            music.muted = false; 
+            music.volume = 0.10; // صوت البيانو ناعم وخلفي بنسبة 10%
+        }
+        window.removeEventListener('mousemove', activateAudio);
+        window.removeEventListener('click', activateAudio);
+        window.removeEventListener('touchstart', activateAudio);
+        window.removeEventListener('scroll', activateAudio);
+    };
+
+    window.addEventListener('mousemove', activateAudio);
+    window.addEventListener('click', activateAudio);
+    window.addEventListener('touchstart', activateAudio);
+    window.addEventListener('scroll', activateAudio);
+}
+
 const bgGlow = document.getElementById('bgGlow');
 if (bgGlow) {
     window.addEventListener('mousemove', (e) => {
@@ -17,7 +31,6 @@ if (bgGlow) {
     });
 }
 
-// قاعدة البيانات البرمجية الغنية بالتفاصيل الكثيرة جداً لعرضها في زر المعاينة بدون صور
 const projectsData = {
     project1: {
         title: "منصة تجارة إلكترونية ثلاثية الأبعاد متكاملة",
@@ -35,7 +48,6 @@ const projectsData = {
     }
 };
 
-// فتح النافذة المنبثقة وحقن التفاصيل الكثيرة بها
 function openModal(projectId) {
     const modal = document.getElementById('detailModal');
     const contentContainer = document.getElementById('modalContent');
@@ -65,7 +77,6 @@ function openModal(projectId) {
     }
 }
 
-// إغلاق النافذة المنبثقة
 function closeModal() {
     const modal = document.getElementById('detailModal');
     if (modal) {
@@ -73,7 +84,6 @@ function closeModal() {
     }
 }
 
-// معالجة إرسال الفورم المعتاد
 const contactForm = document.getElementById('customContactForm');
 if(contactForm) {
     contactForm.addEventListener('submit', (e) => {
