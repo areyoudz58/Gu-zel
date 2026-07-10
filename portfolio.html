@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض المشاريع والخدمات</title>
+    <title>معرض مشاريع الأكاديمية</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="bg-glow" id="bgGlow"></div>
+
     <nav class="navbar">
-        <div class="logo">موقع<span>التميز</span></div>
+        <div class="logo">moh-gu zel <span>academy</span></div>
         <ul class="nav-links">
             <li><a href="index.html">الرئيسية</a></li>
             <li><a href="portfolio.html" class="active">المشاريع</a></li>
@@ -21,55 +27,47 @@
 
     <section class="portfolio-section">
         <h1 class="section-title">أحدث <span>مشاريعنا الإبداعية</span></h1>
-        <p class="section-subtitle">شاهد كيف نمزج التصميم بالبرمجة لنخلق لوحات فنية تفاعلية.</p>
+        <p class="section-subtitle">انقر على زر "معاينة التفاصيل" لتكتشف التفاصيل الهندسية والبرمجية الدقيقة لكل مشروع.</p>
 
         <div class="portfolio-grid">
-            <!-- كرت مشروع 1 -->
             <div class="portfolio-card">
                 <div class="card-img-holder">
                     <div class="overlay-effect">
-                        <a href="#" class="view-btn"><i class="fas fa-eye"></i> معاينة</a>
+                        <button class="view-btn" onclick="openModal('project1')"><i class="fas fa-eye"></i> معاينة التفاصيل</button>
                     </div>
-                    <div class="mock-img img-1"></div>
+                    <div class="mock-img img-1"><span>E-Commerce Tech</span></div>
                 </div>
                 <div class="card-info">
                     <h3>منصة تجارة إلكترونية ثلاثية الأبعاد</h3>
-                    <p>موقع تسوق متكامل بمؤثرات تنقل وحركات ناعمة لزيادة المبيعات.</p>
+                    <p>منصة مبيعات جيل رابع معتمدة على الذكاء الاصطناعي لتحليل سلوك المستهلك وتخصيص الواجهات.</p>
                 </div>
             </div>
 
-            <!-- كرت مشروع 2 -->
             <div class="portfolio-card">
                 <div class="card-img-holder">
                     <div class="overlay-effect">
-                        <a href="#" class="view-btn"><i class="fas fa-eye"></i> معاينة</a>
+                        <button class="view-btn" onclick="openModal('project2')"><i class="fas fa-eye"></i> معاينة التفاصيل</button>
                     </div>
-                    <div class="mock-img img-2"></div>
+                    <div class="mock-img img-2"><span>Smart Dashboard</span></div>
                 </div>
                 <div class="card-info">
                     <h3>لوحة تحكم إحصائية ذكية</h3>
-                    <p>عرض البيانات والرسوم البيانية بشكل متحرك وتفاعلي مريح للعين.</p>
-                </div>
-            </div>
-
-            <!-- كرت مشروع 3 -->
-            <div class="portfolio-card">
-                <div class="card-img-holder">
-                    <div class="overlay-effect">
-                        <a href="#" class="view-btn"><i class="fas fa-eye"></i> معاينة</a>
-                    </div>
-                    <div class="mock-img img-3"></div>
-                </div>
-                <div class="card-info">
-                    <h3>موقع ألعاب تفاعلي</h3>
-                    <p>تجربة غامرة باستخدام تأثيرات الماوس والـ Parallax لشد انتباه اللاعبين.</p>
+                    <p>نظام داخلي لإدارة المؤسسات وتحليل البيانات الضخمة (Big Data) بشكل لحظي وآمن.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                </div>
+        </div>
+    </div>
+
     <footer>
-        <p>جميع الحقوق محفوظة © 2026 | صُنع بشغف ومؤثرات بصرية متطورة</p>
+        <p>جميع الحقوق محفوظة © 2026 | صُنع بشغف داخل moh-gu zel academy</p>
     </footer>
 
     <script src="script.js"></script>
