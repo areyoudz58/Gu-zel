@@ -1,58 +1,90 @@
-// تأثير تتبع حركة الماوس لإنشاء توهج ديناميكي بالخلفية
-const bgGlow = document.querySelector('.bg-glow');
+// تشغيل الموسيقى تلقائياً برفق فور قيام المستخدم بأي نقرة على الموقع لتفادي قيود المتصفح
+window.addEventListener('click', () => {
+    const music = document.getElementById('bgMusic');
+    if (music && music.paused) {
+        music.volume = 0.25; // جعل صوت نغمة هالاالدئة خفيف ومريح وخلفي
+        music.play().catch(err => console.log("المتصفح يطلب تفاعل إضافي لتشغيل الصوت"));
+    }
+}, { once: false }); // يستمر في التأكد من تفعيل الموسيقى الهادئة المرافقة لتصفح الأكاديمية
 
+// تحريك الخلفية بشكل عشوائي ديناميكي مستمر وملاحقة الماوس
+const bgGlow = document.getElementById('bgGlow');
 if (bgGlow) {
     window.addEventListener('mousemove', (e) => {
-        // تحريك مسار التوهج الخلفي برفق مع حركة يد المستخدم
         const x = e.clientX;
         const y = e.clientY;
-        
-        bgGlow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 242, 254, 0.07) 0%, rgba(79, 172, 254, 0) 50%)`;
+        bgGlow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 242, 254, 0.12) 0%, rgba(6, 9, 19, 0) 65%)`;
     });
 }
 
-// تأثير الأنيميشن عند ظهور عناصر الكروت أثناء سحب الصفحة (Scroll Animation)
-const cards = document.querySelectorAll('.feature-card, .portfolio-card');
-
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
+// قاعدة البيانات البرمجية الغنية بالتفاصيل الكثيرة جداً لعرضها في زر المعاينة بدون صور
+const projectsData = {
+    project1: {
+        title: "منصة تجارة إلكترونية ثلاثية الأبعاد متكاملة",
+        desc: "هذا المشروع يعتبر الطفرة القادمة لأكاديمية moh-gu zel academy في مجال البيع الرقمي الفاخر.",
+        details: "تم بناء المنصة بالكامل من الصفر دون الاعتماد على قوالب جاهزة. تحتوي على لوحة تحكم ديناميكية تتيح للمشرفين تتبع المخزون وسلوك العملاء بدقة متناهية عبر خوارزميات الذكاء الاصطناعي. كما تم تزويد الواجهة الأمامية بتقنيات خفيفة ومؤثرات جافاسكريبت متكاملة لعرض المنتجات بزاوية 360 درجة.",
+        features: ["بوابات دفع مشفرة بالكامل SSL", "لوحة تحكم للمبيعات الفورية", "أنظمة حماية ضد ثغرات XSS و CSRF"],
+        tech: ["HTML5", "CSS3 Neon", "Vanilla JavaScript", "Node.js API"]
+    },
+    project2: {
+        title: "لوحة تحكم إحصائية للبيانات الضخمة",
+        desc: "أداة متطورة مصممة خصيصاً للمؤسسات والشركات الكبرى لمراقبة مؤشرات الأداء الحيوية والمالية.",
+        details: "تتميز لوحة التحكم بقدرتها على معالجة ما يصل إلى 100,000 طلب في الثانية الواحدة وبث الرسوم البيانية التفاعلية والمتحركة بشكل لحظي ومباشر. تم تصميم الألوان بنظام الـ Dark Mode الفخم والمريح للعين الطويلة الاستخدام لحماية الموظفين من الإجهاد البصري مع تدعيم الأنظمة بأعلى درجات التشفير السيبراني المتقدم.",
+        features: ["مخططات بيانية تفاعلية SVG حية", "تصدير فوري للتقارير بصيغة PDF و Excel", "نظام صلاحيات متعدد للموظفين والمشرفين"],
+        tech: ["Advanced JS", "CSS Grid/Flexbox", "Charts Framework", "WebSockets Data"]
+    }
 };
 
-const cardObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if(!entry.isIntersecting) return;
-        
-        // تفعيل حركة رائعة عند ظهور العنصر على الشاشة
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-    });
-}, observerOptions);
+// فتح النافذة المنبثقة وحقن التفاصيل الكثيرة بها
+function openModal(projectId) {
+    const modal = document.getElementById('detailModal');
+    const contentContainer = document.getElementById('modalContent');
+    const project = projectsData[projectId];
+    
+    if (project) {
+        let techBadges = project.tech.map(t => `<span class="badge">${t}</span>`).join('');
+        let featuresList = project.features.map(f => `<li>${f}</li>`).join('');
 
-cards.forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(40px)';
-    card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    cardObserver.observe(card);
-});
+        contentContainer.innerHTML = `
+            <div class="modal-body-content">
+                <h2>${project.title}</h2>
+                <p><strong>نبذة أساسية:</strong> ${project.desc}</p>
+                <h4>التفاصيل الهندسية العميقة للكود:</h4>
+                <p>${project.details}</p>
+                <h4>أبرز مميزات هذا النظام:</h4>
+                <ul style="margin-right: 20px; color: #a0aec0; line-height: 1.8;">
+                    ${featuresList}
+                </ul>
+                <h4>التقنيات المستخدمة في الأكاديمية:</h4>
+                <div class="tech-badges">
+                    ${techBadges}
+                </div>
+            </div>
+        `;
+        modal.classList.add('active');
+    }
+}
 
-// تأثير تفاعلي عند إرسال نموذج الاتصال
+// إغلاق النافذة المنبثقة
+function closeModal() {
+    const modal = document.getElementById('detailModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+// معالجة إرسال الفورم المعتاد
 const contactForm = document.getElementById('customContactForm');
 if(contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
-        // تأثير اهتزاز وتوهج الزر عند الإرسال بنجاح
         const submitBtn = document.querySelector('.btn-submit');
-        submitBtn.innerHTML = 'جاري الإرسال بنجاح... <i class="fas fa-check-circle"></i>';
-        submitBtn.style.background = 'linear-gradient(45deg, #10b981, #059669)';
+        submitBtn.innerHTML = 'جاري المعالجة الفورية... <i class="fas fa-circle-notch fa-spin"></i>';
         
         setTimeout(() => {
-            alert('تم استلام رسالتك وتفعيل مؤثر النجاح بنجاح بنسبة 100%!');
+            alert('تم استلام رسالتك وتوثيقها في قاعدة بيانات الأكاديمية بنجاح!');
             contactForm.reset();
             submitBtn.innerHTML = 'إرسال الرسالة الآن <i class="fas fa-paper-plane"></i>';
-            submitBtn.style.background = 'linear-gradient(45deg, #00f2fe, #4facfe)';
-        }, 1500);
+        }, 1200);
     });
 }
